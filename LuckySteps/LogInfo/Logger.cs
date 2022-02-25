@@ -16,7 +16,7 @@ namespace LuckySteps.LogInfo
             _path = DateTime.UtcNow.ToString();
             if (!File.Exists(_path))
             {
-                File.Create(_path);
+                File.Create(_path).Close();
             }
         }
         public void Error(string message)
@@ -28,6 +28,7 @@ namespace LuckySteps.LogInfo
         {
             WriteFile("Info" + message);
         }
+        
         private void WriteFile(string name)
         {
             File.WriteAllText(_path, name);

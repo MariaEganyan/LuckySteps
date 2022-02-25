@@ -1,8 +1,10 @@
-﻿using LuckySteps.enums;
+﻿using LuckySteps.Data;
+using LuckySteps.enums;
 using LuckySteps.interfaces;
 using LuckySteps.LogInfo;
 using LuckySteps.MembersOfGame;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace LuckySteps.PlayGame
@@ -11,18 +13,22 @@ namespace LuckySteps.PlayGame
     {
         private TicetOfGame _ticet { get; set; }
         private ILogger _logger { get; set; }
+        private UsersData data { get; set; }
 
         public Game()
         {
             _ticet = CreatTicet();
             _logger = Logger.GetInstance();
+            data = new UsersData();
         }
         public void StartGame()
         {
             Console.WriteLine("Write your name:");
             string name = Console.ReadLine();
             IUser user = new User(name);
-            
+            data.AddUser(user);
+            List<IUser> users = data.Read();
+
             ShowGame(user);
         }
         private void ShowGame(IUser user)
